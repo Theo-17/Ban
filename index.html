@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios para Estudiantes – UTE</title>
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      background: #F6F8F7;
+      color: #333;
+      font-size: 14px;
+    }
+
+    /* CABECERA */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 50px;
+      border-bottom: 4px solid #7BC258;
+      background: #0054A6;
+      z-index: 10;
+    }
+    .header-left, .header-right {
+      display: flex;
+      align-items: center;
+    }
+    .header-left {
+      padding: 0 16px;
+      gap: 16px;
+    }
+    .header-right {
+      background: #03578E;
+      height: 100%;
+      padding: 0 16px;
+      gap: 8px;
+    }
+    .header-left i, .header-right i {
+      font-size: 24px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .header-right span {
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    /* LOGIN */
+    #login {
+      max-width: 320px;
+      margin: 120px auto 0;
+      background: #fff;
+      padding: 24px;
+      border-radius: 4px;
+    }
+    #login h2 { margin-bottom: 16px; color: #0054a6; }
+    #login label { display: block; margin-bottom: 8px; }
+    #login input, #login button { width: 100%; }
+    #login input {
+      padding: 8px; margin-bottom: 16px;
+      border: 1px solid #ccc; border-radius: 2px;
+    }
+    #login button {
+      padding: 10px; background: #0054a6;
+      color: #fff; border: none; border-radius: 2px;
+      cursor: pointer; font-size: 1rem;
+    }
+
+    /* TÍTULO */
+    h1.page-title {
+      color: #4F585F;
+      font-size: 2.4rem;
+      font-weight: normal;
+      max-width: 1134px;
+      margin: 110px auto 16px;
+      padding: 0 15px;
+    }
+
+    /* CONTENEDOR CENTRAL */
+    .container {
+      position: relative;
+      max-width: 1134px;
+      margin: 0 auto 40px;
+      padding: 0 15px;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    /* SALUDO Y AVATAR */
+    .greeting {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .greeting img.avatar {
+      position: absolute; top: 0; left: 0;
+      width: 85px; height: 95px;
+      border-radius: 50% / 60%;
+      object-fit: cover;
+    }
+    .greeting .texts {
+      margin-left: calc(85px + 20px);
+      padding-top: 12px;
+    }
+    .greeting .texts p { margin-bottom: 4px; }
+    .greeting .texts p:first-child span.name { font-weight: normal; }
+    .greeting .texts p:last-child strong { font-weight: bold; }
+
+    /* SECCIONES Y LISTAS */
+    section { margin-bottom: 24px; }
+    section h2 {
+      color: #0054a6; font-size: 1.1rem;
+      margin: 0 0 8px calc(85px + 20px);
+    }
+    ul {
+      list-style: none;
+      margin-left: calc(85px + 20px);
+      padding-left: 0;
+    }
+    ul li {
+      position: relative; padding-left: 12px;
+      margin-bottom: 2px;
+      color: #31383E;
+    }
+    ul li:before {
+      content: '•'; position: absolute; left: 0;
+      color: #31383E;
+    }
+
+    /* ESTILOS ESPECÍFICOS */
+    section.matricula ul li {
+      font-weight: bold; color: green;
+      margin-bottom: 6px;
+    }
+    section.academic ul li {
+      color: #666666; font-weight: normal;
+    }
+
+    /* MEDIA QUERY PARA MÓVIL */
+    @media (max-width: 600px) {
+      .header-right span {
+        display: none;
+      }
+      .header-right {
+        padding: 0 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login">
+    <h2>Inicia sesión</h2>
+    <form id="loginForm">
+      <label for="fullName">Nombre completo:</label>
+      <input type="text" id="fullName" placeholder="Ej: Juan Pérez Rodríguez" required />
+      <button type="submit">Acceder</button>
+    </form>
+  </div>
+
+  <!-- CABECERA -->
+  <header id="mainHeader" style="display:none">
+    <div class="header-left">
+      <i class="material-icons">apps</i>
+    </div>
+    <div class="header-right">
+      <i class="material-icons">settings</i>
+      <i class="material-icons">person</i>
+      <span id="headerName"></span>
+    </div>
+  </header>
+
+  <!-- TÍTULO -->
+  <h1 class="page-title" id="pageTitle" style="display:none">
+    Servicios para estudiantes
+  </h1>
+
+  <!-- CONTENIDO -->
+  <div class="container" id="content" style="display:none">
+
+    <div class="greeting">
+      <img src="picture.png" alt="Avatar" class="avatar">
+      <div class="texts">
+        <p>Hola <span class="name" id="greetName"></span>,</p>
+        <p><strong>Bienvenido al Sistema Banner Estudiantes de la Universidad UTE.</strong></p>
+      </div>
+    </div>
+
+    <section class="matricula">
+      <h2>Matrícula:</h2>
+      <ul>
+        <li>Actualiza tus datos personales</li>
+        <li>Solicito factura a nombre de un tercero</li>
+        <li>Registra matrícula</li>
+        <li>
+          Generar orden de pago
+          <span style="color:#800000;">
+            (Házlo 10 minutos después de registrar tu matrícula)
+          </span>
+        </li>
+        <li>Pago en línea</li>
+        <li>Resumen estado de cuenta</li>
+      </ul>
+    </section>
+
+    <section class="academic">
+      <h2>Información Académica:</h2>
+      <ul>
+        <li>Ver tu Perfil del estudiante</li>
+        <li>Ver asistencia</li>
+        <li>Ver calificaciones</li>
+        <li>Ver tu avance Académico</li>
+        <li>Ver tu Historia Académica</li>
+        <li>Solicitar titulación</li>
+        <li>Ver solicitudes de titulación</li>
+        <li>Encuesta de evaluación docente</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Solicitudes de Servicios:</h2>
+      <ul>
+        <li>Solicitar un servicio</li>
+        <li>Ver estado de la solicitud</li>
+        <li>Solicitar parqueadero</li>
+        <li>Encuestas</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Información Financiera:</h2>
+      <ul>
+        <li>… aquí irían más ítems …</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('fullName').value.trim();
+      if (!name) return;
+      document.getElementById('headerName').textContent = name;
+      document.getElementById('greetName').textContent = name;
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('mainHeader').style.display = 'flex';
+      document.getElementById('pageTitle').style.display = 'block';
+      document.getElementById('content').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
